@@ -8,4 +8,4 @@ Run:
 
 ```bnr.py 'file-path' scale```
 
-Scale is a precentage to scale the inital banner file (96x32). Default scaling is set to 500% original banner size. 
+Scale is the precentage to scale the inital banner file (96x32). Default scaling is set to 500% original banner size. 
