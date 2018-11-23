@@ -1,2 +1,11 @@
 # BNR-viewer
-Views .bnr files found in the root directory of Gamecube games
+Views .bnr (banner) files found in the root directory of Gamecube games
+
+Requires:
+PyOpenGL and GLUT
+
+Run:
+
+```bnr.py 'file-path' scale```
+
+Scale is a precentage to scale the inital banner file (96x32). Default scaling is set to 500% original banner size. 
