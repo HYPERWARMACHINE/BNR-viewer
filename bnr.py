@@ -4,7 +4,6 @@ import struct
 import sys
 
 def main():
-    
     pixels = []
     linear_pixels = []
 
@@ -18,18 +17,20 @@ def main():
     for i in range(0x20, 0x1820, 2):
         pixels.append((file[i] << 8) + file[i+1])
 
-    #decodes 4x4 components of bnr
-    for vblock in range(8):
-        vblock_i = vblock*96*4
-        for line in range(4):
-            line_i = line*4
-            for hblock in range(24):
-                hblock_i = hblock*16+line_i
-                for i in range(4):
-                    linear_pixels.append(pixels[vblock_i+hblock_i+i])
+    #untiles image
+    image_width = 96
+    image_height = 32
+    tile_width = 4
+    tile_height = 4
 
-    glutInit(sys.argv)
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
+    for ver_block in range(image_height//tile_height):
+        i = ver_block*image_width*tile_height
+        for line in range(tile_height):
+            line_num = line*4
+            for hblock in range(image_width//tile_width):
+                j = hblock*16+line_num
+                for k in range(4):
+                    linear_pixels.append(pixels[i+j+k])
 
     if len(sys.argv) > 2:
         if sys.argv[2] == "full":
@@ -43,12 +44,12 @@ def main():
         window_width = 480
         window_height = 160
 
+    glutInit(sys.argv)
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
     glutInitWindowSize(int(window_width),int(window_height))
-
     window_title = list(file[0x1820:0x1840])
     window_title = struct.pack("b"*len(window_title), *window_title).decode('utf8')
     glutCreateWindow(window_title)
-
     glClearColor(1.0, 1.0, 1.0, 0.0)
     glEnable(GL_TEXTURE_2D)
     texture = glGenTextures(1)
