@@ -38,8 +38,8 @@ def main():
             window_height = window_width/3
         else:
             scale = int(sys.argv[2])/100
-            window_width = 96*scale
-            window_height = 32*scale
+            window_width = image_width*scale
+            window_height = image_height*scale
     else:
         window_width = 480
         window_height = 160
@@ -54,7 +54,7 @@ def main():
     glEnable(GL_TEXTURE_2D)
     texture = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, texture)
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 96, 32, 0, GL_BGRA, GL_UNSIGNED_SHORT_1_5_5_5_REV, linear_pixels)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_BGRA, GL_UNSIGNED_SHORT_1_5_5_5_REV, linear_pixels)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glutDisplayFunc(draw)
