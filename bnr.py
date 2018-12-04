@@ -3,6 +3,11 @@ from OpenGL.GLUT import *
 import struct
 import sys
 
+IMG_WIDTH = 96
+IMG_HEIGHT = 32
+TILE_WIDTH = 4
+TILE_HEIGHT = 4
+
 def main():
     pixels = []
     linear_pixels = []
@@ -18,17 +23,12 @@ def main():
         pixels.append((file[i] << 8) + file[i+1])
 
     #untiles image
-    image_width = 96
-    image_height = 32
-    tile_width = 4
-    tile_height = 4
-
-    for ver_block in range(image_height//tile_height):
-        i = ver_block*image_width*tile_height
-        for line in range(tile_height):
+    for ver_block in range(IMG_HEIGHT//TILE_HEIGHT):
+        i = ver_block*IMAGE_WIDTH*TILE_HEIGHT
+        for line in range(TILE_HEIGHT):
             line_num = line*4
-            for hblock in range(image_width//tile_width):
-                j = hblock*16+line_num
+            for hor_block in range(IMG_WIDTH//TILE_WIDTH):
+                j = hor_block*16+line_num
                 for k in range(4):
                     linear_pixels.append(pixels[i+j+k])
 
@@ -38,8 +38,8 @@ def main():
             window_height = window_width/3
         else:
             scale = int(sys.argv[2])/100
-            window_width = image_width*scale
-            window_height = image_height*scale
+            window_width = IMG_WIDTH*scale
+            window_height = IMG_HEIGHT*scale
     else:
         window_width = 480
         window_height = 160
@@ -54,7 +54,7 @@ def main():
     glEnable(GL_TEXTURE_2D)
     texture = glGenTextures(1)
     glBindTexture(GL_TEXTURE_2D, texture)
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_BGRA, GL_UNSIGNED_SHORT_1_5_5_5_REV, linear_pixels)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, IMG_WIDTH, IMG_HEIGHT, 0, GL_BGRA, GL_UNSIGNED_SHORT_1_5_5_5_REV, linear_pixels)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glutDisplayFunc(draw)
