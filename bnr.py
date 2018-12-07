@@ -24,7 +24,7 @@ def main():
 
     #untiles image
     for ver_block in range(IMG_HEIGHT//TILE_HEIGHT):
-        i = ver_block*IMAGE_WIDTH*TILE_HEIGHT
+        i = ver_block*IMG_WIDTH*TILE_HEIGHT
         for line in range(TILE_HEIGHT):
             line_num = line*4
             for hor_block in range(IMG_WIDTH//TILE_WIDTH):
