@@ -15,8 +15,7 @@ def main():
     file_path = str(sys.argv[1])
     file = open(file_path, "rb").read()
     
-    checksum = sum(file[0:4])
-    if checksum != 275 and 276:
+    if file[0:4] != b'BNR1' and file[0:4] != b'BNR2':
         print("Checksum failed, supported file?")
 
     for i in range(0x20, 0x1820, 2):
